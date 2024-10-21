@@ -18,12 +18,10 @@ export class Name {
     }
 
     public getComponent(i: number): string {
-        // TODO: what if oob?
         return this.components[i];
     }
 
     public setComponent(i: number, c: string): void {
-        // TODO: what if oob?
         this.components[i] = c;
     }
 
@@ -32,7 +30,6 @@ export class Name {
     }
 
     public insert(i: number, c: string): void {
-        // TODO: what if oob?
         this.components.splice(i, 0, c);
     }
 
@@ -41,7 +38,6 @@ export class Name {
     }
 
     public remove(i: number): void {
-        // TODO: what if oob?
         this.components.splice(i);
     }
 
