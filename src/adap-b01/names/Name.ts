@@ -13,6 +13,7 @@ export class Name {
         }
     }
 
+    /** Returns human-readable representation of Name instance */
     // @methodtype conversion-method
     public asNameString(delimiter: string = this.delimiter): string {
         return this.components.join(delimiter);
@@ -28,6 +29,7 @@ export class Name {
         this.components[i] = c;
     }
 
+    /** Returns number of components in Name instance */
     // @methodtype get-method
     public getNoComponents(): number {
         return this.components.length;
