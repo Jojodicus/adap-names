@@ -16,7 +16,9 @@ export class Name {
     /** Returns human-readable representation of Name instance */
     // @methodtype conversion-method
     public asNameString(delimiter: string = this.delimiter): string {
-        return this.components.join(delimiter);
+        return this.components.map(
+            v => v.replace(delimiter, this.ESCAPE_CHARACTER.concat(delimiter))
+        ).join(delimiter);
     }
 
     // @methodtype get-method
@@ -47,7 +49,7 @@ export class Name {
 
     // @methodtype command-method
     public remove(i: number): void {
-        this.components.splice(i);
+        this.components.splice(i, 1);
     }
 
 }

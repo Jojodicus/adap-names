@@ -33,3 +33,24 @@ describe("Escape character extravaganza", () => {
     expect(n.asNameString()).toBe("oss.cs.fau.de#people");
   });
 });
+
+describe("Unspecified edge cases", () => {
+  it("test stuff", () => {
+    let n: Name = new Name(["adap-names"], '-');
+    expect(n.getNoComponents()).toBe(1);
+
+    n.append("my-repo");
+    n.append("account");
+    expect(n.asNameString()).toBe("adap\\-names-my\\-repo-account");
+    expect(n.getNoComponents()).toBe(3);
+
+    n.setComponent(0, "jo-jo");
+    n.insert(1, "git-hub");
+    n.remove(2);
+    expect(n.asNameString()).toBe("jo\\-jo-git\\-hub-account");
+    expect(n.getNoComponents()).toBe(3);
+    expect(n.asNameString("o")).toBe("j\\o-joogit-huboacc\\ount");
+
+    expect(n.getComponent(1)).toBe("git-hub");
+  })
+});
