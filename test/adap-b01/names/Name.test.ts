@@ -49,7 +49,7 @@ describe("Unspecified edge cases", () => {
     n.remove(2);
     expect(n.asNameString()).toBe("jo\\-jo-git\\-hub-account");
     expect(n.getNoComponents()).toBe(3);
-    expect(n.asNameString("o")).toBe("j\\o-joogit-huboacc\\ount");
+    expect(n.asNameString("o")).toBe("j\\o-j\\oogit-huboacc\\ount");
 
     expect(n.getComponent(1)).toBe("git-hub");
   })
