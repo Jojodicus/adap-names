@@ -3,6 +3,12 @@ import { Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
 export class StringName implements Name {
     // helper methods to (un-)escape a string
 
+    // add escape characters to a string
+    private static escaped(s: string, delimiter: string): string {
+        return s.replaceAll(ESCAPE_CHARACTER, ESCAPE_CHARACTER + ESCAPE_CHARACTER) // \ -> \\
+                .replaceAll(delimiter, ESCAPE_CHARACTER + delimiter);              // . -> \.
+    }
+
     // remove escape characters and construct string array
     private static unescapedArray(s: string, delimiter: string): string[] {
         let amongus: string = "ඞ";
@@ -51,7 +57,9 @@ export class StringName implements Name {
     }
 
     public asDataString(): string {
-        return this.name;
+        let ua: string[] = StringName.unescapedArray(this.name, this.delimiter);
+        let uae: string[] = ua.map(s => StringName.escaped(s, DEFAULT_DELIMITER));
+        return uae.join(DEFAULT_DELIMITER);
     }
 
     public isEmpty(): boolean {

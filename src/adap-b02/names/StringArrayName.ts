@@ -26,7 +26,7 @@ export class StringArrayName implements Name {
         }
 
         // FIXME: assume `other` does not contain escape/delimiter which should be treated special
-        this.components = other;
+        this.components = other.map(s => StringArrayName.unescaped(s));
         if (delimiter !== undefined) {
             this.delimiter = delimiter;
         }

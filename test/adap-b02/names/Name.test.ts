@@ -57,3 +57,15 @@ describe("Escape character extravaganza", () => {
     expect(n.asString()).toBe("oss.cs.fau.de#people");
   });
 });
+
+
+describe("Escape character parade", () => {
+  it("more tests!", () => {
+    let n: Name = new StringName("m.y,n\\,a\\\\m\\.e", ",");
+    let n2: Name = new StringArrayName(["m.y", "n\\,a\\\\m\\.e"], ",");
+    // [ m.y | n\,a\\m\.e ] (esc)
+    // [ m.y | n,a\m.e ] (un-esc)
+    expect(n.asDataString()).toBe("m\\.y.n,a\\\\m\\.e")
+    expect(n2.asDataString()).toBe("m\\.y.n,a\\\\m\\.e")
+  });
+});
