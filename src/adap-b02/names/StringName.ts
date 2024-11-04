@@ -119,8 +119,10 @@ export class StringName implements Name {
         if (other.getDelimiterCharacter() != this.delimiter) {
             throw new Error("Delimiters do not match");
         }
-        this.name += this.delimiter + other.asDataString();
-        this.length += other.getNoComponents();
+        if (!other.isEmpty()) {
+            this.name += this.delimiter + other.asDataString();
+            this.length += other.getNoComponents();
+        }
     }
 
 }
