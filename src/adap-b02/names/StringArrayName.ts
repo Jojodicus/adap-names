@@ -91,6 +91,10 @@ export class StringArrayName implements Name {
 
     // FIXME: not in interface
     public concat(other: Name): void {
+        if (other.getDelimiterCharacter() != this.delimiter) {
+            throw new Error("Delimiters do not match");
+        }
+
         let dataString: string = other.asDataString();
         // same idea as unescaped()
         let amongus: string = "ඞ";

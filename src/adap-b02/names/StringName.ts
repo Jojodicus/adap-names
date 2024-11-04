@@ -116,6 +116,9 @@ export class StringName implements Name {
 
     // FIXME: not in interface
     public concat(other: Name): void {
+        if (other.getDelimiterCharacter() != this.delimiter) {
+            throw new Error("Delimiters do not match");
+        }
         this.name += this.delimiter + other.asDataString();
         this.length += other.getNoComponents();
     }
