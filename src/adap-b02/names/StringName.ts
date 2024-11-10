@@ -78,7 +78,7 @@ export class StringName implements Name {
         // FIXME: assume unescaped representation is fine
         // FIXME: assume oob behavior is fine
         this.checkBounds(x);
-        return StringName.unescapedArray(this.name, this.delimiter)[x];
+        return StringName.escapedArray(this.name, this.delimiter)[x];
     }
 
     public setComponent(n: number, c: string): void {

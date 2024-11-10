@@ -62,7 +62,7 @@ export class StringArrayName implements Name {
     public getComponent(i: number): string {
         // FIXME: assume internal unescaped representation is fine
         this.checkBounds(i);
-        return this.components[i];
+        return StringArrayName.escaped(this.components[i], this.delimiter);
     }
 
     public setComponent(i: number, c: string): void {
