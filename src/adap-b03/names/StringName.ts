@@ -7,28 +7,44 @@ export class StringName extends AbstractName {
     protected length: number = 0;
 
     constructor(other: string, delimiter?: string) {
-        super();
-        throw new Error("needs implementation");
+        super(delimiter);
+        this.name = other;
+        this.length = AbstractName.escapedArray(other, this.delimiter).length;
     }
 
     getNoComponents(): number {
-        throw new Error("needs implementation");
+        return this.length;
     }
 
     getComponent(i: number): string {
-        throw new Error("needs implementation");
+        this.checkBounds(i);
+        return AbstractName.escapedArray(this.name, this.delimiter)[i];
     }
     setComponent(i: number, c: string) {
-        throw new Error("needs implementation");
+        this.checkBounds(i);
+        let arr: string[] = AbstractName.escapedArray(this.name, this.delimiter);
+        arr[i] = c;
+        this.name = arr.join(this.delimiter);
     }
 
     insert(i: number, c: string) {
-        throw new Error("needs implementation");
+        if (i != this.length) {
+            this.checkBounds(i);
+        }
+        let arr: string[] = AbstractName.escapedArray(this.name, this.delimiter);
+        arr.splice(i, 0, c);
+        this.name = arr.join(this.delimiter);
+        this.length++;
     }
     append(c: string) {
-        throw new Error("needs implementation");
+        this.name += this.delimiter + c;
+        this.length++;
     }
     remove(i: number) {
-        throw new Error("needs implementation");
+        this.checkBounds(i);
+        let arr: string[] = AbstractName.escapedArray(this.name, this.delimiter);
+        arr.splice(i, 1);
+        this.name = arr.join(this.delimiter);
+        this.length--;
     }
 }
