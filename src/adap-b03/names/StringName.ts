@@ -12,6 +12,10 @@ export class StringName extends AbstractName {
         this.length = AbstractName.escapedArray(other, this.delimiter).length;
     }
 
+    clone(): StringName {
+        return new StringName(this.name, this.delimiter);
+    }
+
     getNoComponents(): number {
         return this.length;
     }

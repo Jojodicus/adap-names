@@ -1,4 +1,6 @@
 import { Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
+import { StringArrayName } from "./StringArrayName";
+import { StringName } from "./StringName";
 
 export abstract class AbstractName implements Name {
 
@@ -48,9 +50,8 @@ export abstract class AbstractName implements Name {
         return hashCode;
     }
 
-    public clone(): Name {
-        return {...this};
-    }
+    // i don't see a way to give a default implementation
+    abstract clone(): Name;
 
     public isEmpty(): boolean {
         return this.asDataString() == "";
