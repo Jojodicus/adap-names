@@ -16,9 +16,8 @@ export class StringArrayName extends AbstractName {
     }
 
     clone(): StringArrayName {
-        let escapedComponents: string[]
-            = this.components.map(c => AbstractName.escaped(c, this.delimiter));
-        let name: StringArrayName = new StringArrayName(escapedComponents, this.delimiter);
+        let name: StringArrayName = new StringArrayName([""], this.delimiter);
+        name.components = this.components;
         return name;
     }
 
