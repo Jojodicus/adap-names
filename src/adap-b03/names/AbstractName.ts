@@ -20,7 +20,7 @@ export abstract class AbstractName implements Name {
 
     public toString(): string {
         // ???
-        return this.asString();
+        return this.asDataString();
     }
 
     public asDataString(): string {
