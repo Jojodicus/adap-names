@@ -1,4 +1,5 @@
-import { Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
+import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
+import { Name } from "./Name";
 
 export class StringName implements Name {
     // helper methods to (un-)escape a string
@@ -35,7 +36,7 @@ export class StringName implements Name {
 
     // saves escaped variant of string
     protected name: string = "";
-    protected length: number = 0;
+    protected noComponents: number = 0;
 
     constructor(other: string, delimiter?: string) {
         // FIXME: assume `other` does not contain escape/delimiter which should be treated special
@@ -43,12 +44,12 @@ export class StringName implements Name {
         if (delimiter !== undefined) {
             this.delimiter = delimiter;
         }
-        this.length = StringName.escapedArray(other, this.delimiter).length;
+        this.noComponents = StringName.escapedArray(other, this.delimiter).length;
     }
 
     private checkBounds(index: number): void {
-        if (index < 0 || index >= this.length) {
-            throw new Error("Index out of bounds: " + index + " for length " + this.length)
+        if (index < 0 || index >= this.noComponents) {
+            throw new Error("Index out of bounds: " + index + " for length " + this.noComponents)
         }
     }
 
@@ -63,7 +64,7 @@ export class StringName implements Name {
     }
 
     public isEmpty(): boolean {
-        return this.length == 0;
+        return this.noComponents == 0;
     }
 
     public getDelimiterCharacter(): string {
@@ -71,7 +72,7 @@ export class StringName implements Name {
     }
 
     public getNoComponents(): number {
-        return this.length;
+        return this.noComponents;
     }
 
     public getComponent(x: number): string {
@@ -91,18 +92,18 @@ export class StringName implements Name {
 
     public insert(n: number, c: string): void {
         // FIXME: assume oob behavior is fine
-        if (n != this.length) {
+        if (n != this.noComponents) {
             this.checkBounds(n);
         }
         let arr: string[] = StringName.escapedArray(this.name, this.delimiter);
         arr.splice(n, 0, c);
         this.name = arr.join(this.delimiter);
-        this.length++;
+        this.noComponents++;
     }
 
     public append(c: string): void {
         this.name += this.delimiter + c;
-        this.length++;
+        this.noComponents++;
     }
 
     public remove(n: number): void {
@@ -111,7 +112,7 @@ export class StringName implements Name {
         let arr: string[] = StringName.escapedArray(this.name, this.delimiter);
         arr.splice(n, 1);
         this.name = arr.join(this.delimiter);
-        this.length--;
+        this.noComponents--;
     }
 
     // FIXME: not in interface
@@ -121,7 +122,7 @@ export class StringName implements Name {
         }
         if (!other.isEmpty()) {
             this.name += this.delimiter + other.asDataString();
-            this.length += other.getNoComponents();
+            this.noComponents += other.getNoComponents();
         }
     }
 
