@@ -16,6 +16,10 @@ export abstract class AbstractName implements Name {
     }
 
     public asString(delimiter: string = this.delimiter): string {
+        if (delimiter.length != 1) {
+            throw new IllegalArgumentException("delimiter must be single character");
+        }
+
         let components: string[] = [];
         for(let i = 0; i < this.getNoComponents(); ++i) {
             components.push(this.getComponent(i));
