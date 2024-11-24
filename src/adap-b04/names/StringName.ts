@@ -8,68 +8,51 @@ export class StringName extends AbstractName {
     protected noComponents: number = 0;
 
     constructor(other: string, delimiter?: string) {
-        super();
-        throw new Error("needs implementation");
+        super(delimiter);
+        this.name = other;
+        this.noComponents = AbstractName.escapedArray(other, this.delimiter).length;
     }
 
-    public clone(): Name {
-        throw new Error("needs implementation");
+    clone(): StringName {
+        return new StringName(this.name, this.delimiter);
     }
 
-    public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation");
+    getNoComponents(): number {
+        return this.noComponents;
     }
 
-    public toString(): string {
-        throw new Error("needs implementation");
+    getComponent(i: number): string {
+        this.checkBounds(i);
+        return AbstractName.escapedArray(this.name, this.delimiter)[i];
+    }
+    setComponent(i: number, c: string) {
+        this.checkBounds(i);
+        this.checkEscapement(c);
+        let arr: string[] = AbstractName.escapedArray(this.name, this.delimiter);
+        arr[i] = c;
+        this.name = arr.join(this.delimiter);
     }
 
-    public asDataString(): string {
-        throw new Error("needs implementation");
+    insert(i: number, c: string) {
+        this.checkEscapement(c);
+        if (i != this.noComponents) {
+            this.checkBounds(i);
+        }
+        let arr: string[] = AbstractName.escapedArray(this.name, this.delimiter);
+        arr.splice(i, 0, c);
+        this.name = arr.join(this.delimiter);
+        this.noComponents++;
     }
-
-    public isEqual(other: Name): boolean {
-        throw new Error("needs implementation");
+    append(c: string) {
+        this.checkEscapement(c);
+        this.name += this.delimiter + c;
+        this.noComponents++;
     }
-
-    public getHashCode(): number {
-        throw new Error("needs implementation");
+    remove(i: number) {
+        this.checkBounds(i);
+        let arr: string[] = AbstractName.escapedArray(this.name, this.delimiter);
+        arr.splice(i, 1);
+        this.name = arr.join(this.delimiter);
+        this.noComponents--;
     }
-
-    public isEmpty(): boolean {
-        throw new Error("needs implementation");
-    }
-
-    public getDelimiterCharacter(): string {
-        throw new Error("needs implementation");
-    }
-
-    public getNoComponents(): number {
-        throw new Error("needs implementation");
-    }
-
-    public getComponent(i: number): string {
-        throw new Error("needs implementation");
-    }
-
-    public setComponent(i: number, c: string) {
-        throw new Error("needs implementation");
-    }
-
-    public insert(i: number, c: string) {
-        throw new Error("needs implementation");
-    }
-
-    public append(c: string) {
-        throw new Error("needs implementation");
-    }
-
-    public remove(i: number) {
-        throw new Error("needs implementation");
-    }
-
-    public concat(other: Name): void {
-        throw new Error("needs implementation");
-    }
-
 }

@@ -6,6 +6,12 @@ export class Node {
     protected baseName: string = "";
     protected parentNode: Directory;
 
+    protected assertClassInvariants() {
+        // ???
+        // this.assertHasValidBaseName();
+        // this.assertHasValidPermissions(); // <-- permissions are only in lecture, this implementation has none
+    }
+
     constructor(bn: string, pn: Directory) {
         this.doSetBaseName(bn);
         this.parentNode = pn;
