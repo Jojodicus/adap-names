@@ -10,7 +10,7 @@ export abstract class AbstractName implements Name {
     }
 
     public clone(): Name {
-        throw new Error("needs implementation");
+        throw new Error("needs implementation or deletion");
     }
 
     public asString(delimiter: string = this.delimiter): string {
