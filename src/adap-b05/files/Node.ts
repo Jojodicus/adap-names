@@ -1,6 +1,9 @@
 import { ExceptionType, AssertionDispatcher } from "../common/AssertionDispatcher";
+import { Exception } from "../common/Exception";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { InvalidStateException } from "../common/InvalidStateException";
+import { MethodFailedException } from "../common/MethodFailedException";
+import { ServiceFailureException } from "../common/ServiceFailureException";
 
 import { Name } from "../names/Name";
 import { Directory } from "./Directory";
@@ -25,6 +28,7 @@ export class Node {
         this.parentNode.remove(this);
         to.add(this);
         this.parentNode = to;
+        this.assertClassInvariants();
     }
 
     public getFullName(): Name {
@@ -42,7 +46,9 @@ export class Node {
     }
 
     public rename(bn: string): void {
+        this.assertIsValidBaseName(bn, ExceptionType.PRECONDITION);
         this.doSetBaseName(bn);
+        this.assertClassInvariants();
     }
 
     protected doSetBaseName(bn: string): void {
@@ -58,7 +64,18 @@ export class Node {
      * @param bn basename of node being searched for
      */
     public findNodes(bn: string): Set<Node> {
-        throw new Error("needs implementation or deletion");
+        let set: Set<Node> = new Set<Node>();
+        if (bn == this.getBaseName()) {
+            set.add(this);
+        }
+
+        try {
+            this.assertClassInvariants();
+        } catch (e: any) {
+            ServiceFailureException.assertCondition(false, "unable to execute findNodes", e as Exception);
+        }
+
+        return set;
     }
 
     protected assertClassInvariants(): void {
