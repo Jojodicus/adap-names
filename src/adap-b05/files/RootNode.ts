@@ -25,7 +25,12 @@ export class RootNode extends Directory {
     }
 
     public move(to: Directory): void {
+        AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, false, "Can't move root node");
         // null operation
+    }
+
+    public rename(bn: string): void {
+        AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, false, "Can't rename root node");
     }
 
     protected doSetBaseName(bn: string): void {
