@@ -1,5 +1,4 @@
-import { ExceptionType, AssertionDispatcher } from "../common/AssertionDispatcher";
-
+import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { Name } from "../names/Name";
 import { StringName } from "../names/StringName";
 import { Directory } from "./Directory";
@@ -25,21 +24,20 @@ export class RootNode extends Directory {
     }
 
     public move(to: Directory): void {
-        AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, false, "Can't move root node");
+        IllegalArgumentException.assert( false, "Can't move root node");
         // null operation
     }
 
     public rename(bn: string): void {
-        AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, false, "Can't rename root node");
+        IllegalArgumentException.assert(false, "Can't rename root node");
     }
 
     protected doSetBaseName(bn: string): void {
         // null operation
     }
 
-    protected assertIsValidBaseName(bn: string, et: ExceptionType): void {
+    protected assertIsValidBaseName(bn: string): void {
         const condition: boolean = (bn == ""); // Root must have "" as base name
-        AssertionDispatcher.dispatch(et, condition, "invalid base name");
+        IllegalArgumentException.assert(condition, "invalid base name");
     }
-
 }

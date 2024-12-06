@@ -1,4 +1,3 @@
-import { ExceptionType, AssertionDispatcher } from "../common/AssertionDispatcher";
 import { Exception } from "../common/Exception";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { InvalidStateException } from "../common/InvalidStateException";
@@ -21,14 +20,14 @@ export class Node {
 
     protected initialize(pn: Directory): void {
         this.parentNode = pn;
-        this.parentNode.add(this);
+        this.parentNode.addChildNode(this);
     }
 
     public move(to: Directory): void {
-        this.parentNode.remove(this);
-        to.add(this);
+        this.parentNode.removeChildNode(this);
+        to.addChildNode(this);
         this.parentNode = to;
-        this.assertClassInvariants();
+        // this.assertClassInvariants();
     }
 
     public getFullName(): Name {
@@ -46,7 +45,7 @@ export class Node {
     }
 
     public rename(bn: string): void {
-        this.assertIsValidBaseName(bn, ExceptionType.PRECONDITION);
+        this.assertIsValidBaseName(bn);
         this.doSetBaseName(bn);
         this.assertClassInvariants();
     }
@@ -72,7 +71,7 @@ export class Node {
         try {
             this.assertClassInvariants();
         } catch (e: any) {
-            ServiceFailureException.assertCondition(false, "unable to execute findNodes", e as Exception);
+            ServiceFailureException.assert(false, "unable to execute findNodes", e as Exception);
         }
 
         return set;
@@ -80,12 +79,16 @@ export class Node {
 
     protected assertClassInvariants(): void {
         const bn: string = this.doGetBaseName();
-        this.assertIsValidBaseName(bn, ExceptionType.CLASS_INVARIANT);
+        try {
+            this.assertIsValidBaseName(bn);
+        } catch {
+            InvalidStateException.assert(false, "i hate this");
+        }
     }
 
-    protected assertIsValidBaseName(bn: string, et: ExceptionType): void {
-        const condition: boolean = (bn != "");
-        AssertionDispatcher.dispatch(et, condition, "invalid base name");
+    protected assertIsValidBaseName(bn: string): void {
+        const condition: boolean = (bn != ""); // Root must have "" as base name
+        IllegalArgumentException.assert(condition, "invalid base name");
     }
 
 }

@@ -2,7 +2,6 @@ import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
-import { AssertionDispatcher, ExceptionType } from "../common/AssertionDispatcher";
 
 export class StringArrayName extends AbstractName {
 
@@ -11,7 +10,7 @@ export class StringArrayName extends AbstractName {
     constructor(other: string[], delimiter?: string) {
         super(delimiter);
 
-        AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, other.length != 0, "https://www.studon.fau.de/frm4447999_385940.html");
+        IllegalArgumentException.assert(other.length != 0, "https://www.studon.fau.de/frm4447999_385940.html");
 
         this.components = other.map(s => AbstractName.unescaped(s));
     }

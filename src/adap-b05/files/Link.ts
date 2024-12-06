@@ -1,6 +1,7 @@
 import { Node } from "./Node";
 import { Directory } from "./Directory";
 import { AssertionDispatcher, ExceptionType } from "../common/AssertionDispatcher";
+import { IllegalArgumentException } from "../common/IllegalArgumentException";
 
 export class Link extends Node {
 
@@ -33,7 +34,7 @@ export class Link extends Node {
     }
 
     protected ensureTargetNode(target: Node | null): Node {
-        AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, target != null, "Target is null");
+        IllegalArgumentException.assert(target != null, "Target is null");
         const result: Node = this.targetNode as Node;
         return result;
     }

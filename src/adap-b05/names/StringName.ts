@@ -1,7 +1,7 @@
 import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
-import { AssertionDispatcher, ExceptionType } from "../common/AssertionDispatcher";
+import { InvalidStateException } from "../common/InvalidStateException";
 
 export class StringName extends AbstractName {
 
@@ -62,6 +62,6 @@ export class StringName extends AbstractName {
     }
 
     private checkClassInvariants(): void {
-        AssertionDispatcher.dispatch(ExceptionType.CLASS_INVARIANT, this.noComponents == AbstractName.escapedArray(this.name, this.delimiter).length, "Component length broken");
+        InvalidStateException.assert(this.noComponents == AbstractName.escapedArray(this.name, this.delimiter).length, "Component length broken");
     }
 }

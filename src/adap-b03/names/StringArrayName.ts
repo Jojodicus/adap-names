@@ -6,6 +6,7 @@ export class StringArrayName extends AbstractName {
 
     protected components: string[] = [];
 
+<<<<<<< HEAD
     constructor(other: string[], delimiter?: string) {
         super(delimiter);
 
@@ -14,6 +15,11 @@ export class StringArrayName extends AbstractName {
         }
 
         this.components = other.map(s => AbstractName.unescaped(s));
+=======
+    constructor(source: string[], delimiter?: string) {
+        super();
+        throw new Error("needs implementation or deletion");
+>>>>>>> upstream/main
     }
 
     clone(): StringArrayName {

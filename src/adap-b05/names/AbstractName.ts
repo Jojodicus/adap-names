@@ -1,4 +1,3 @@
-import { AssertionDispatcher, ExceptionType } from "../common/AssertionDispatcher";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { InvalidStateException } from "../common/InvalidStateException";
 import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
@@ -15,7 +14,7 @@ export abstract class AbstractName implements Name {
     abstract clone(): Name;
 
     public asString(delimiter: string = this.delimiter): string {
-        AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, delimiter.length == 1, "delimiter must be single character");
+        IllegalArgumentException.assert(delimiter.length == 1, "delimiter must be single character");
 
         let components: string[] = [];
         for(let i = 0; i < this.getNoComponents(); ++i) {
@@ -74,7 +73,7 @@ export abstract class AbstractName implements Name {
     abstract remove(i: number): void;
 
     public concat(other: Name): void {
-        AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, other.getDelimiterCharacter() == this.delimiter, "Delimiters do not match");
+        IllegalArgumentException.assert(other.getDelimiterCharacter() == this.delimiter, "Delimiters do not match");
 
         for(let i: number = 0; i < other.getNoComponents(); ++i) {
             this.append(other.getComponent(i));
@@ -84,7 +83,7 @@ export abstract class AbstractName implements Name {
     // helper methods
 
     protected checkBounds(index: number): void {
-        AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, index >= 0 && index < this.getNoComponents(), `Index out of bounds: ${index} for length ${this.getNoComponents()}`);
+        IllegalArgumentException.assert(index >= 0 && index < this.getNoComponents(), `Index out of bounds: ${index} for length ${this.getNoComponents()}`);
     }
 
     // add escape characters to a string
@@ -133,7 +132,7 @@ export abstract class AbstractName implements Name {
     protected checkEscapement(s: string): void {
         if (!AbstractName.isEscapedComponent(s, this.getDelimiterCharacter())) {
             // to hell with the assertion dispatcher, unreadable pile of junk
-            AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, false, `String not escpaed: ${s}`);
+            IllegalArgumentException.assert(false, `String not escpaed: ${s}`);
         }
     }
 }
