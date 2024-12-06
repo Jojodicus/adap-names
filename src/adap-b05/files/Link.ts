@@ -1,6 +1,5 @@
 import { Node } from "./Node";
 import { Directory } from "./Directory";
-import { AssertionDispatcher, ExceptionType } from "../common/AssertionDispatcher";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 
 export class Link extends Node {
